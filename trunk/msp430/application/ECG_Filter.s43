@@ -1,0 +1,83 @@
+#include <msp430x16x.h>               ; Processor specific definitions
+#define Filter
+
+FLAG_ADC            EQU   BIT0
+RS232ToPC           EQU   BIT1
+RS232ToBlutTooth    EQU   BIT2
+SaveECG             EQU   BIT4
+
+FilterLen     EQU   251
+
+
+        NAME    FIR_Filter
+        EXTERN  hn,xn,n
+
+
+        PUBLIC  fir                   ; Declare symbol to be exported
+        RSEG    CODE                  ; Code is relocatable
+fir
+
+        PUSH    R4
+        PUSH    R5
+        PUSH    R6
+        PUSH    R7        
+        PUSH    R8             
+           
+        MOV     #xn,R8
+        ADD     n,R8
+        ADD     #2,R8
+        MOV     n,R5                  ;Let R5 = x(n),R8 = x(n+1)
+        MOV     R12,xn(R5)
+#ifdef  Filter
+        MOV     #(FilterLen/2),R6
+        MOV     #hn,R4
+        MOV     #0,&RESHI
+        MOV     #0,&RESLO
+;==============35 coeff. Fir calculate start!==================
+conv
+        MOV     @R4+,&MACS                      ;5  system impulse
+        CMP     #(xn+(FilterLen)*2),R8          ;2  if R8 = buffer finish
+        JNE     XnPtrNoOverR8                   ;2  continue shift
+        MOV     #xn,R8                          ;2  go to start sample
+XnPtrNoOverR8
+        MOV     @R8+,R7                         ;5
+        ADD     xn(R5),R7                       ;3
+        MOV     R7,&OP2                         ;2  h(n) * (x(n) + x( N - n ))
+        CMP     #0,R5                           ;2  if R5 = buffer 0
+        JNZ     XnPtrNoOver                     ;2  else continue shift
+        MOV     #((FilterLen)*2),R5
+XnPtrNoOver
+        SUB     #2,R5                           ;2
+        DEC     R6                              ;2  R6-- while(R6 < FilterLen-1) goto conv
+        JNZ     conv                            ;2
+#if (FilterLen & 0x01) != 0                     ;FilterLen == even?
+        MOV     @R4,&MACS
+        MOV     xn(R5),&OP2
+#endif
+;=========So far,Fir calculate completed only 438 CLK===========
+        MOV     #8,R8                           ;8+4 = 10
+        MOV     &RESLO,R6
+        MOV     &RESHI,R7
+shift:
+        RLA     R6
+        RLC     R7
+        DEC     R8
+        JNZ     shift
+
+        MOV     R7,R12      
+#else
+        MOV     xn(R5),R12
+#endif
+        ADD     #2,n
+        CMP     #(FilterLen*2),n
+        JNE     NoShift2Start
+        CLR     n
+NoShift2Start
+        POP    R8          
+        POP    R7
+        POP    R6
+        POP    R5
+        POP    R4   
+        RET
+
+        END

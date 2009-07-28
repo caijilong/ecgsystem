@@ -1,0 +1,58 @@
+[DisAssemblyWindow]
+NumStates=_ 1
+State 1=_ 1
+[State Storage]
+Control Register=0
+[Sequencer]
+Control Register=0
+NextState0=0
+NextState1=0
+[Action Register]
+Break=0
+State Storage=0
+[Interrupts]
+Enabled=1
+[MemoryMap]
+Enabled=0
+TypeVolition=1
+UnspecRange=1
+ActionState=1
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
+[Breakpoints]
+Bp0=_ "Code" "{$PROJ_DIR$\Command.c}.184.1@1" 0 0 0 0 "" 0 ""
+Bp1=_ "Code" "{$PROJ_DIR$\ECG_acquisition.c}.1.1@1" 0 0 0 0 "" 0 ""
+Bp2=_ "Code" "{$PROJ_DIR$\System\Scheduler\CooperSchedular.c}.82.13@1" 0 0 0 0 "" 0 ""
+Bp3=_ "Code" "{C:\Program Files\IAR Systems\Embedded Workbench Evaluation 4.0}.68.5@1" 0 0 0 0 "" 0 ""
+Bp4=_ "Code" "{C:\Program Files\IAR Systems\Embedded Workbench Evaluation 4.0}.78.3@1" 0 0 0 0 "" 0 ""
+Bp5=_ "Code" "{C:\Program Files\IAR Systems\Embedded Workbench Evaluation 4.0}.54.9@1" 0 0 0 0 "" 0 ""
+Bp6=_ "Code" "{C:\Program Files\IAR Systems\Embedded Workbench Evaluation 4.0}.59.9@1" 0 0 0 0 "" 0 ""
+Bp7=_ "Code" "{C:\Program Files\IAR Systems\Embedded Workbench Evaluation 4.0}.53.5@1" 0 0 0 0 "" 0 ""
+Bp8=_ "Code" "{C:\Program Files\IAR Systems\Embedded Workbench Evaluation 4.0}.70.5@1" 0 0 0 0 "" 0 ""
+Bp9=_ "Code" "{D:\ECG project\Program\MSP430\fir1}.72.1@1" 0 0 0 0 "" 0 ""
+Bp10=_ "Code" "{C:\Program Files\IAR Systems\Embedded Workbench Evaluation 4.0}.142.48@1" 0 0 0 0 "" 0 ""
+Count=11
+[FET]
+Clock mode=14
+Extended Clock mode=61663
+Extended Clock Control Enable=0
+Advanced Extended Clock Control=0
+Emulation mode=0
+Free running=0
+Shutting Down=1
+[Memory Dump]
+Start address=
+Lenghth=
+Address info=0
+Format=0
+Dump registers=0
+PC=0
+SP=0
+SR=0
+all registers=0
+File name=
